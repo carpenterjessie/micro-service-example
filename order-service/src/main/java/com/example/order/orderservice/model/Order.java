@@ -17,6 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Entity
@@ -26,11 +27,11 @@ public class Order {
     @Id
     @Column
     @GeneratedValue
-    private String orderId;
+    private String orderId = UUID.randomUUID().toString();
 
     @Column
     @Temporal(TemporalType.TIMESTAMP)
-    private Date placeAt;
+    private Date placeAt = new Date();
 
     @CollectionTable(joinColumns = @JoinColumn(name = "order_id"))
     @ElementCollection
@@ -38,9 +39,8 @@ public class Order {
     private List<OrderEntry> entries;
 
     @Column
-    private String           transactionId;
+    private String customerName;
 
-    public Order(){
-        this.placeAt = new Date();
-    }
+    @Column
+    private String           transactionId;
 }
